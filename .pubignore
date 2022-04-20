@@ -1,0 +1,5 @@
+example/build
+example/android/app/google-services.json
+example/ios/Runner/GoogleService-Info.plist
+example/assets/.env
+!example/assets/.env.template

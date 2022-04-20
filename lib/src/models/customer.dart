@@ -5,11 +5,15 @@ class ProgBonusCustomer extends Equatable {
     required this.phoneNumber,
     required this.cardNumber,
     required this.firstName,
+    this.email,
+    this.lastName,
   });
 
   final String phoneNumber;
   final String cardNumber;
   final String firstName;
+  final String? lastName;
+  final String? email;
 
   @override
   List<Object?> get props => [
@@ -22,7 +26,9 @@ class ProgBonusCustomer extends Equatable {
     return ProgBonusCustomer(
       phoneNumber: json['phoneNumber']?.toString() ?? '',
       cardNumber: json['cardNumber']?.toString() ?? '',
+      email: json['email']?.toString() ?? '',
       firstName: json['firstName']?.toString() ?? '',
+      lastName: json['lastName']?.toString() ?? '',
     );
   }
 }

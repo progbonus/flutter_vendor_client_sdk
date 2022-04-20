@@ -11,25 +11,34 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages). 
 -->
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+Flutter package for ProgBonus Vendor Clients app.
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+* Get customer information
+* Get customer's bonus information
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+```dart
+import 'package:progbonus_vendor_client/progbonus_vendor_client.dart';
+
+```
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
-
 ```dart
-const like = 'sample';
+Get.lazyPut<IProgBonusClient>(
+    () => ProgBonusClient(
+      baseUrl: Get.find<IAppConfig>().PROGBONUS_API_URL,
+      tenantsId: Get.find<IAppConfig>().PROGBONUS_TENANT_ID,
+      secret: Get.find<IAppConfig>().PROGBONUS_TENANT_SECRET,
+      getAccessToken: () {
+        final accessToken = Get.find<AuthService>().idToken;
+        return accessToken;
+      },
+    ),
+  );
 ```
 
 ## Additional information
