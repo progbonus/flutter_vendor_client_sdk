@@ -1,5 +1,3 @@
-import 'package:equatable/equatable.dart';
-
 class ProgBonusBonus {
   List<Bonuses>? _bonuses;
   double? _totalAmount;
@@ -12,17 +10,15 @@ class ProgBonusBonus {
     double? actualTotalAmount,
     List<Types>? types,
   }) {
-    if (bonuses != null) {
-      this._bonuses = bonuses;
-    }
+    _bonuses = bonuses;
     if (totalAmount != null) {
-      this._totalAmount = totalAmount;
+      _totalAmount = totalAmount;
     }
     if (actualTotalAmount != null) {
-      this._actualTotalAmount = actualTotalAmount;
+      _actualTotalAmount = actualTotalAmount;
     }
     if (types != null) {
-      this._types = types;
+      _types = types;
     }
   }
 
@@ -61,14 +57,14 @@ class ProgBonusBonus {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    if (this._bonuses != null) {
-      data['bonuses'] = this._bonuses!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (_bonuses != null) {
+      data['bonuses'] = _bonuses!.map((v) => v.toJson()).toList();
     }
-    data['totalAmount'] = this._totalAmount;
-    data['actualTotalAmount'] = this._actualTotalAmount;
-    if (this._types != null) {
-      data['types'] = this._types!.map((v) => v.toJson()).toList();
+    data['totalAmount'] = _totalAmount;
+    data['actualTotalAmount'] = _actualTotalAmount;
+    if (_types != null) {
+      data['types'] = _types!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -80,7 +76,7 @@ class Bonuses {
   double? _used;
   double? _actualAmount;
   String? _start;
-  Null? _end;
+  String? _end;
   int? _daysLeft;
   bool? _expired;
   String? _type;
@@ -91,36 +87,36 @@ class Bonuses {
       double? used,
       double? actualAmount,
       String? start,
-      Null? end,
+      String? end,
       int? daysLeft,
       bool? expired,
       String? type}) {
     if (id != null) {
-      this._id = id;
+      _id = id;
     }
     if (amount != null) {
-      this._amount = amount;
+      _amount = amount;
     }
     if (used != null) {
-      this._used = used;
+      _used = used;
     }
     if (actualAmount != null) {
-      this._actualAmount = actualAmount;
+      _actualAmount = actualAmount;
     }
     if (start != null) {
-      this._start = start;
+      _start = start;
     }
     if (end != null) {
-      this._end = end;
+      _end = end;
     }
     if (daysLeft != null) {
-      this._daysLeft = daysLeft;
+      _daysLeft = daysLeft;
     }
     if (expired != null) {
-      this._expired = expired;
+      _expired = expired;
     }
     if (type != null) {
-      this._type = type;
+      _type = type;
     }
   }
 
@@ -134,8 +130,8 @@ class Bonuses {
   set actualAmount(double? actualAmount) => _actualAmount = actualAmount;
   String? get start => _start;
   set start(String? start) => _start = start;
-  Null? get end => _end;
-  set end(Null? end) => _end = end;
+  String? get end => _end;
+  set end(String? end) => _end = end;
   int? get daysLeft => _daysLeft;
   set daysLeft(int? daysLeft) => _daysLeft = daysLeft;
   bool? get expired => _expired;
@@ -157,16 +153,16 @@ class Bonuses {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['id'] = this._id;
-    data['amount'] = this._amount;
-    data['used'] = this._used;
-    data['actualAmount'] = this._actualAmount;
-    data['start'] = this._start;
-    data['end'] = this._end;
-    data['daysLeft'] = this._daysLeft;
-    data['expired'] = this._expired;
-    data['type'] = this._type;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = _id;
+    data['amount'] = _amount;
+    data['used'] = _used;
+    data['actualAmount'] = _actualAmount;
+    data['start'] = _start;
+    data['end'] = _end;
+    data['daysLeft'] = _daysLeft;
+    data['expired'] = _expired;
+    data['type'] = _type;
     return data;
   }
 }
@@ -177,10 +173,10 @@ class Types {
 
   Types({String? type, double? amount}) {
     if (type != null) {
-      this._type = type;
+      _type = type;
     }
     if (amount != null) {
-      this._amount = amount;
+      _amount = amount;
     }
   }
 
@@ -195,9 +191,9 @@ class Types {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['type'] = this._type;
-    data['amount'] = this._amount;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['type'] = _type;
+    data['amount'] = _amount;
     return data;
   }
 }

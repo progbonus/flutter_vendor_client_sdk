@@ -32,31 +32,25 @@ class ProgBonusClient implements IProgBonusClient {
   /// Get my customer info
   @override
   Future<ResultOf<ProgBonusCustomer?>> getCustomer() async {
-    try {
-      //
+    return ResultOf.tryAsync(() async {
       final res = await _get('api/v1/customer');
       _logResponse(res);
-      return ResultOf.success(
+      return successWith(
         ProgBonusCustomer.fromJson(
             jsonDecode(res.body) as Map<String, dynamic>),
       );
-    } catch (e) {
-      return ResultOf.withException(e as Exception);
-    }
+    });
   }
 
   @override
   Future<ResultOf<ProgBonusBonus?>> getBonuses() async {
-    try {
-      //
+    return ResultOf.tryAsync(() async {
       final res = await _get('api/v1/bonuses');
       _logResponse(res);
-      return ResultOf.success(
+      return successWith(
         ProgBonusBonus.fromJson(jsonDecode(res.body) as Map<String, dynamic>),
       );
-    } catch (e) {
-      return ResultOf.withException(e as Exception);
-    }
+    });
   }
 
   Future _get(String url) async {

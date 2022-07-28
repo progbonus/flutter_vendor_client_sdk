@@ -22,7 +22,7 @@ class ProgBonusCustomer extends Equatable {
         firstName,
       ];
 
-  static ProgBonusCustomer? fromJson(Map<String, dynamic> json) {
+  static ProgBonusCustomer fromJson(Map<String, dynamic> json) {
     return ProgBonusCustomer(
       phoneNumber: json['phoneNumber']?.toString() ?? '',
       cardNumber: json['cardNumber']?.toString() ?? '',

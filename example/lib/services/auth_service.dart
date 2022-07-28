@@ -43,13 +43,13 @@ class AuthService extends GetxService with GetxSubscribing {
       );
 
       if (res.user == null) {
-        return Result.withErrorMessage('some error');
+        return fail('some error');
       }
 
       return Result.ok;
     } catch (e) {
       print(e);
-      return Result.withException(e as Exception);
+      return fail(e);
     }
   }
 }
