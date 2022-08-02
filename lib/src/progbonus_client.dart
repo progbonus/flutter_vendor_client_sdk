@@ -8,6 +8,19 @@ import 'package:http/retry.dart';
 
 import 'models/models.dart';
 
+abstract class AuthType {}
+
+class JwtAuthType extends AuthType {
+  final String Function() getAccessToken;
+  JwtAuthType(this.getAccessToken);
+}
+
+class SecretAuthType extends AuthType {
+  final String secret;
+  final String Function()? ts;
+  SecretAuthType({required this.secret, this.ts});
+}
+
 abstract class IProgBonusClient {
   Future<ResultOf<ProgBonusCustomer?>> getCustomer();
   Future<ResultOf<ProgBonusBonus?>> getBonuses();
@@ -16,18 +29,17 @@ abstract class IProgBonusClient {
 class ProgBonusClient implements IProgBonusClient {
   ProgBonusClient({
     required this.baseUrl,
-    required this.getAccessToken,
-    required this.tenantsId,
-    required this.secret,
+    required this.tenantId,
+    required this.authType,
   });
 
+  final AuthType authType;
   final String baseUrl;
-  final String Function() getAccessToken;
-  final String tenantsId;
-  final String secret;
+  final String tenantId;
+
   final client = RetryClient(http.Client());
 
-  static const _ts = 'shop';
+  static const _ts = 'prog_bonus';
 
   /// Get my customer info
   @override
@@ -54,28 +66,44 @@ class ProgBonusClient implements IProgBonusClient {
   }
 
   Future _get(String url) async {
-    return client.get(
-      Uri.parse('$baseUrl/$url'),
-      headers: _baseHeader(),
-    );
+    final urlString = '$baseUrl/$url';
+    final headers = _baseHeader();
+    _logRequest('GET: $urlString', headers);
+    return client.get(Uri.parse(urlString), headers: headers);
   }
 
   Map<String, String> _baseHeader() {
-    return {
-      'Authorization': 'Bearer ${getAccessToken()}',
-      'tenant': '20DA8AB6-B8DB-44C5-43F9-08D58DED04A5',
-      'secret': _computeSecret(_ts, secret),
-      'ts': _ts,
-    };
+    if (authType is JwtAuthType) {
+      return {
+        'Authorization': 'Bearer ${(authType as JwtAuthType).getAccessToken()}',
+        'tenant': tenantId,
+      };
+    }
+
+    if (authType is SecretAuthType) {
+      final mode = (authType as SecretAuthType);
+      final currentTs = mode.ts?.call() ?? _ts;
+      return {
+        'tenant': tenantId,
+        'secret': _computeSecret(currentTs, mode.secret),
+        'ts': currentTs,
+      };
+    }
+
+    throw 'Unknown auth type';
   }
 
   static String _computeSecret(String ts, String secret) {
-    // '71F5AC1754B69E3E42815AB3BBE8F94F43CA8A0BB7C2B86C7E8CCB688158DC92', // shopdimanche
-
     final bytes = utf8.encode('$ts$secret'); // data being hashed
     final digest = sha256.convert(bytes);
     final str = digest.toString();
     return str;
+  }
+
+  static void _logRequest(String url, Map<String, dynamic> headers) {
+    log('Request url: $url');
+    log('Request header: $headers');
+    // log('Request body: ${res.body}');
   }
 
   static void _logResponse(dynamic res) {

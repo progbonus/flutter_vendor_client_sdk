@@ -17,15 +17,28 @@ Future initServices() async {
 
   Get.put(AuthService());
 
+  /// JWT Authorization
   Get.lazyPut<IProgBonusClient>(
     () => ProgBonusClient(
       baseUrl: Get.find<IAppConfig>().PROGBONUS_API_URL,
-      tenantsId: Get.find<IAppConfig>().PROGBONUS_TENANT_ID,
-      secret: Get.find<IAppConfig>().PROGBONUS_TENANT_SECRET,
-      getAccessToken: () {
-        final accessToken = Get.find<AuthService>().idToken;
-        return accessToken;
-      },
+      tenantId: Get.find<IAppConfig>().PROGBONUS_TENANT_ID,
+      authType: JwtAuthType(
+        () => Get.find<AuthService>().idToken,
+      ),
+    ),
+  );
+
+  Get.lazyPut<IProgBonusClient>(
+    () => ProgBonusClient(
+      baseUrl: Get.find<IAppConfig>().PROGBONUS_API_URL,
+      tenantId: Get.find<IAppConfig>().PROGBONUS_TENANT_ID,
+      authType: SecretAuthType(
+        secret: Get.find<IAppConfig>().PROGBONUS_TENANT_SECRET,
+        ts: () {
+          // return 'some secret string';
+          return DateTime.now().toIso8601String();
+        },
+      ),
     ),
   );
 }

@@ -1,6 +1,6 @@
 name: progbonus_vendor_client
 description: Flutter package for ProgBonus Vendor Clients app.
-version: 0.0.3
+version: 1.0.0
 homepage: https://github.com/progbonus/flutter_vendor_client_sdk
 
 # false_secrets:
@@ -14,7 +14,7 @@ dependencies:
     sdk: flutter
 
   http: ^0.13.4
-  fluent_result: ^7.1.0
+  fluent_result: ^7.1.1
   equatable: ^2.0.3
   crypto: ^3.0.2
 

@@ -1,3 +1,7 @@
+## 1.0.0
+
+* [Breaking changes] separate auth types.
+
 ## 0.0.3
 
 * [Update] dependencies
