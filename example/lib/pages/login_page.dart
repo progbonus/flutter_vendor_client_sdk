@@ -18,29 +18,73 @@ class LoginPage extends GetView<LoginPageController> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(50),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Email'),
-            TextField(
-              onChanged: c.onEmailChanged,
-            ),
-            20.h,
-            Text('Password'),
-            TextField(
-              onChanged: c.onPasswordChanged,
-              obscureText: true,
-            ),
-            20.h,
-            Center(
-              child: ElevatedButton(
-                onPressed: c.login,
-                child: Text('Login'),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Email'),
+              TextField(
+                onChanged: c.onEmailChanged,
               ),
-            ),
-          ],
+              20.h,
+              Text('Password'),
+              TextField(
+                onChanged: c.onPasswordChanged,
+                obscureText: true,
+              ),
+              20.h,
+              Center(
+                child: ElevatedButton(
+                  onPressed: c.login,
+                  child: Text('Login'),
+                ),
+              ),
+              100.h,
+              Text('------ OR -------'),
+              100.h,
+              _buildPhoneSingIn()
+            ],
+          ),
         ),
       ),
+    );
+  }
+
+  Widget _buildPhoneSingIn() {
+    return Column(
+      children: [
+        Text('Phone'),
+        TextField(
+          onChanged: c.onPhoneChanged,
+          keyboardType: TextInputType.number,
+          decoration: InputDecoration(
+            suffix: InkWell(
+              child: Text('Send code'),
+              onTap: c.verifyPhone,
+            ),
+          ),
+        ),
+        Obx(() {
+          if (c.codeSend) {
+            return Column(
+              children: [
+                Text('Sms'),
+                TextField(
+                  onChanged: c.onOTPChanged,
+                  keyboardType: TextInputType.number,
+                ),
+                Center(
+                  child: ElevatedButton(
+                    onPressed: c.loginWithPhoneNumber,
+                    child: Text('Login'),
+                  ),
+                ),
+              ],
+            );
+          }
+          return SizedBox.shrink();
+        })
+      ],
     );
   }
 }

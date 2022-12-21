@@ -52,4 +52,24 @@ class AuthService extends GetxService with GetxSubscribing {
       return fail(e);
     }
   }
+
+  Future<Result> loginWithPhoneNumber({
+    required String verificationId,
+    required String otp,
+  }) async {
+    try {
+      final credential = PhoneAuthProvider.credential(
+        verificationId: verificationId,
+        smsCode: otp,
+      );
+      final res = await _auth.signInWithCredential(credential);
+      if (res.user == null) {
+        return fail('some error');
+      }
+      return Result.ok;
+    } catch (e) {
+      print(e);
+      return fail(e);
+    }
+  }
 }
