@@ -23,7 +23,8 @@ Future initServices() async {
       baseUrl: Get.find<IAppConfig>().PROGBONUS_API_URL,
       tenantId: Get.find<IAppConfig>().PROGBONUS_TENANT_ID,
       authType: JwtAuthType(
-        () => Get.find<AuthService>().idToken,
+        () => Get.find<AuthService>()
+            .idToken, // FirebaseAuth.instance.accessToken
       ),
     ),
   );

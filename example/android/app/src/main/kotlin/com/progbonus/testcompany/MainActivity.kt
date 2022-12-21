@@ -1,4 +1,4 @@
-package com.progbonus.testcompany
+package shop.dimanchelingerie.app
 
 import io.flutter.embedding.android.FlutterActivity
 
