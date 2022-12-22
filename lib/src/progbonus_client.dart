@@ -76,7 +76,6 @@ class ProgBonusClient implements IProgBonusClient {
     if (authType is JwtAuthType) {
       return {
         'Authorization': 'Bearer ${(authType as JwtAuthType).getAccessToken()}',
-        'tenant': tenantId,
       };
     }
 
